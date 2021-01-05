@@ -26,7 +26,6 @@ namespace Store.web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddDbContext<DataContext>(cfg =>
             {
                 cfg.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
@@ -34,6 +33,8 @@ namespace Store.web
             });
 
             services.AddTransient<SeedDb>();
+
+            services.AddScoped<IRepository, Repository>();
 
 
             services.Configure<CookiePolicyOptions>(options =>
