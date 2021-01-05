@@ -15,6 +15,7 @@ namespace Store.web.Data
         public SeedDb(DataContext context)
         {
             this.context = context;
+
             this.random = new Random();
         }
 
@@ -31,12 +32,8 @@ namespace Store.web.Data
             }
         }
 
-        private void AddProduct(string v)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void AddProducts(string name)
+      
+        private void AddProduct(string name)
         {
             this.context.Products.Add(new Product
             {

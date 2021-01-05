@@ -13,7 +13,7 @@
         [Required]
         public string Name { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0;C2}", ApplyFormatInEditMode = false)]
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         public decimal Price { get; set; }
 
         [Display(Name = "Image")]
@@ -32,7 +32,7 @@
         public bool IsAvailable { get; set; }
 
 
-        [DisplayFormat(DataFormatString = "{0;N2}", ApplyFormatInEditMode = false)]
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
         public double Stock { get; set; }
 
 
