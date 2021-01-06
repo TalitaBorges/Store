@@ -1,22 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Store.web.Data;
-using Store.web.Data.Entities;
-
-namespace Store.web.Controllers
+﻿namespace Store.web.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using Store.web.Data;
+    using Store.web.Data.Entities;
+    using Store.web.Helpers;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+
     public class ProductsController : Controller
     {
         private readonly IProductRepository productRepository;
+        private readonly IUserHelper userHelper;
 
-        public ProductsController(IProductRepository productRepository)
+        public ProductsController(IProductRepository productRepository, IUserHelper userHelper)
         {
             this.productRepository = productRepository;
+            this.userHelper = userHelper;
         }
 
         // GET: Products
@@ -57,6 +58,8 @@ namespace Store.web.Controllers
         {
             if (ModelState.IsValid)
             {
+                //TODO: Change for the logged user
+                product.User = await this.userHelper.GetUserByEmailAsync("about.talitaborges@gmail.com");
                 await this.productRepository.CreateAsync(product);
                 return RedirectToAction(nameof(Index));
             }
@@ -86,11 +89,13 @@ namespace Store.web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,ImageURL,LastPurchase,LastSale,IsAvailable,Stock")] Product product)
         {
-           
+
             if (ModelState.IsValid)
             {
                 try
                 {
+                    //TODO: Change for the logged user
+                    product.User = await this.userHelper.GetUserByEmailAsync("about.talitaborges@gmail.com");
                     await this.productRepository.UpdateAsync(product);
                 }
                 catch (DbUpdateConcurrencyException)
@@ -129,7 +134,7 @@ namespace Store.web.Controllers
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task <IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var product = await this.productRepository.GetByIdAsync(id);
             await this.productRepository.DeleteAsync(product);
