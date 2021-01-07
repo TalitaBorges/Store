@@ -1,5 +1,6 @@
 ﻿namespace Store.web.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Store.web.Data;
@@ -11,7 +12,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-
+    
     public class ProductsController : Controller
     {
         private readonly IProductRepository productRepository;
@@ -47,6 +48,7 @@
         }
 
         // GET: Products/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -203,6 +205,7 @@
         }
 
         // GET: Products/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
