@@ -86,8 +86,8 @@
 
                 var product = this.ToProduct(view, path);
 
-                //TODO: Change for the logged user
-                product.User = await this.userHelper.GetUserByEmailAsync("about.talitaborges@gmail.com");
+                //para fazer entrar alguma coisa que precisamos alterar depois fazer taskList   TODO: Change for the logged user
+                product.User = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
                 await this.productRepository.CreateAsync(product);
                 return RedirectToAction(nameof(Index));
             }
@@ -185,7 +185,7 @@
                     var product = this.ToProduct(view, path);
 
                     //TODO: Change for the logged user
-                    product.User = await this.userHelper.GetUserByEmailAsync("about.talitaborges@gmail.com");
+                    product.User = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
                     await this.productRepository.UpdateAsync(product);
                 }
                 catch (DbUpdateConcurrencyException)
